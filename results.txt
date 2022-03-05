@@ -1,0 +1,3 @@
+FOUND: Anagram number 1518 in 16 sec: e4820b45d2277f3844eac66c903e84be -> 'printout stout yawls'
+FOUND: Anagram number 3669 in 41 sec: 23170acc097c24edb98fc5488ab033fe -> 'ty outlaws printouts'
+FOUND: Anagram number 7152631 in 3978 sec: 665e5bcb0c20062fe8abaaf4628bb154 ->' wu lisp not statutory'

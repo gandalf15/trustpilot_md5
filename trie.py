@@ -5,7 +5,9 @@ This file hold Trie class.
 import multiprocessing as mp
 
 # define Node type
-Node = dict[str, dict]
+# See ptoblem with forward declaration:
+# https://www.python.org/dev/peps/pep-0484/#the-problem-of-forward-declarations
+Node = dict[str, "Node"]
 
 
 class Trie:
@@ -15,6 +17,8 @@ class Trie:
     Trie is an efficient information reTrieval data structure. Using Trie,
     search complexities can be brought to optimal limit (key length).
     However, Trie can be also used for efficient anagram generation.
+    For more details see "The Algorithm Design Manual", 3rd Edition
+    by Steven Skiena page 448.
     """
 
     def __init__(self, wordlist: list[str]) -> None:
@@ -59,14 +63,13 @@ class Trie:
 
         Args:
         letters: Letters for anagrams.
-        spaces: Number of spaces that the anagram should have.
+        spaces: Number of spaces that the generated anagram should have.
         results_queue: A queue where the generated anagrams are put.
-            After all anagrams are generated, it puts None in the queue 
+            After all anagrams are generated, it puts None in the queue
             to signalise that it has finished.
         """
         self._anagrams_helper(letters, "", spaces, self._root, results_queue)
         results_queue.put(None)
-        results_queue.close()
 
     def _anagrams_helper(self, string: str, prefix: str, remaining_spaces: int,
                          node: Node, results_queue: mp.Queue) -> None:
@@ -76,7 +79,7 @@ class Trie:
             if self._end_symbol in node:
                 results_queue.put(prefix)
             return
-        # DFS for all valid anagrams.
+        # Depth First Search for all valid anagrams.
         for child_letter, child_node in node.items():
             if child_letter in string:
                 new_string = string.replace(child_letter, "", 1)
